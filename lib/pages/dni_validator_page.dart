@@ -6,6 +6,7 @@ class DniValidatorPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final List<String> identifications = [
       '0195566046',
+      '0105566039',
       '0105566046',
       '01A5566046',
       '3212121212',
