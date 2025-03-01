@@ -1,5 +1,6 @@
-import 'package:ec_validator/validators/dni_validator.dart';
 import 'package:flutter/material.dart';
+
+import 'package:ec_validator/shared/bottom_navigator_bar.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,50 +9,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> identifications = [
-      '0105566046',
-      '01A5566046',
-      '3212121212',
-      '3212121212',
-      '2712121212',
-    ];
-    
-    return MaterialApp(
+    return const MaterialApp(
       title: 'EC Validator',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Ec Validator'),
-        ),
-        body: ListView.builder(
-          itemCount: identifications.length,
-          itemBuilder: (context, index) {
-            final identification = identifications[index];
-            final result = DniValidator.isValid(identification);
-            return Card(
-              child: ListTile(
-                title: Text(identification),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'isValid: ${result.isValid.toString()}',
-                      style: const TextStyle()
-                    ),
-                    Text(
-                      'Error code: ${result.typeCodeError?.toString() ?? ''}',
-                      style: const TextStyle()
-                    ),
-                    Text(
-                       'Error message: ${result.errorMessage ?? ''}',
-                      style: const TextStyle()
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        )
-      ),
+      debugShowCheckedModeBanner: false,
+      home: CustomBottomNavigatorBar(),
     );
   }
 }
