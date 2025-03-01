@@ -20,6 +20,7 @@ class IdentificationResult {
 
 enum ErrorCode {
   invalidIdentification,
+  invalidThirdDigit,
   invalidEmpty,
   invalidLengthOrFormat,
   invalidCodeProvince,

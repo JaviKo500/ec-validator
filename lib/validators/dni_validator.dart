@@ -7,6 +7,7 @@ class DniValidator {
     try {
       initValidate(identification, TypeIdentification.dni);
       validateCodeProvince(identification.substring(0, 2));
+      validateThirdDigit(identification.substring(2, 3), TypeIdentification.dni);
       return IdentificationResult(
         isValid: true,
         errorMessage: null,
