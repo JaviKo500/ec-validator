@@ -1,23 +1,19 @@
 import 'package:ec_validator/validators/index.dart';
 import 'package:flutter/material.dart';
 
-class DniValidatorPage extends StatelessWidget {
-  DniValidatorPage({super.key});
+class RucValidatorPage extends StatelessWidget {
+  RucValidatorPage({super.key});
   final _formKey = GlobalKey<FormState>();
   final List<String> identifications = [
       '0195566046',
       '0105566039',
       '0105566046',
-      '01A5566046',
-      '3212121212',
-      '3212121212',
-      '2712121212',
     ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('EC DNI Validator', style: TextStyle(color: Colors.white),),
+          title: const Text('EC RUC Validator', style: TextStyle(color: Colors.white),),
           backgroundColor: Colors.purple,
         ),
         body: Column(
@@ -38,8 +34,8 @@ class DniValidatorPage extends StatelessWidget {
                         const SizedBox(height: 6,),
                         TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'DNI',
-                            hintText: '0100000000',
+                            labelText: 'RUC',
+                            hintText: '0100000000001',
                             hintStyle: const TextStyle(color: Colors.grey),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(24),

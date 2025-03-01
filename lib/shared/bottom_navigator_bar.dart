@@ -13,11 +13,9 @@ class CustomBottomNavigatorBar extends StatefulWidget {
 class _CustomBottomNavigatorBarState extends State<CustomBottomNavigatorBar> {
   int _selectedIndex = 0;
   
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  
   static final List<Widget> _widgetOptions = <Widget>[
     DniValidatorPage(),
-    const Text('Index 1: Ruc', style: optionStyle),
+    RucValidatorPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,7 +33,7 @@ class _CustomBottomNavigatorBarState extends State<CustomBottomNavigatorBar> {
             BottomNavigationBarItem(icon: Icon(Icons.business), label: 'RUC'),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
+          selectedItemColor: Colors.purpleAccent,
           onTap: _onItemTapped,
         ),
       );
