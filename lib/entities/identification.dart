@@ -22,6 +22,7 @@ enum ErrorCode {
   invalidIdentification,
   invalidEmpty,
   invalidLengthOrFormat,
+  invalidCodeProvince,
   invalidType,
   invalidCheckDigit,
 }

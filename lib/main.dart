@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
     final List<String> identifications = [
       '0105566046',
       '01A5566046',
-      '01A511',
-      ''
-      '001 '
+      '3212121212',
+      '3212121212',
+      '2712121212',
     ];
     
     return MaterialApp(
