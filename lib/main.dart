@@ -13,9 +13,20 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Ec Validator'),
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+        body: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('0105566046'),
+                Text('Is valid?: '),
+              ],
+            ),
+          ],
+        )
       ),
     );
   }
