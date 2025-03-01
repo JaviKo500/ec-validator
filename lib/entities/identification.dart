@@ -19,7 +19,19 @@ class IdentificationResult {
 }
 
 enum ErrorCode {
-  invalidLength,
+  invalidIdentification,
+  invalidEmpty,
+  invalidLengthOrFormat,
   invalidType,
   invalidCheckDigit,
+}
+
+class ValidationRule {
+  final String pattern;
+  final String errorMessage;
+
+  ValidationRule({
+    required this.pattern,
+    required this.errorMessage,
+  });
 }
