@@ -22,6 +22,9 @@ class RucValidator {
           algorithm11(ruc.substring(0,9), ruc.substring(9, 10), typeIdentification);
           break;
         case TypeIdentification.rucPublicSociety:
+          validateThirdDigit(ruc.substring(2, 3), typeIdentification);
+          validateCodeEstablishment(ruc.substring(9, 13));
+          algorithm11(ruc.substring(0,8), ruc.substring(8, 9), typeIdentification);
           break;
         default:
           throw IdentificationException(
