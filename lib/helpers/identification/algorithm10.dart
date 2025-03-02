@@ -1,7 +1,7 @@
 import 'package:ec_validator/entities/index.dart';
 import 'package:ec_validator/exceptions/index.dart';
 
-bool algorithm10 ( String  firstDigits, String verificationDigitString ) {
+bool algorithm10 ( String firstDigits, String verificationDigitString ) {
   final verificationDigit = int.tryParse(verificationDigitString);
   if (verificationDigit == null) {
     throw IdentificationException(
