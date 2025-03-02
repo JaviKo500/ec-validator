@@ -2,9 +2,18 @@ import 'package:ec_validator/entities/index.dart';
 import 'package:ec_validator/validators/index.dart';
 import 'package:flutter/material.dart';
 
-class RucValidatorPage extends StatelessWidget {
-  RucValidatorPage({super.key});
+class RucValidatorPage extends StatefulWidget {
+  const RucValidatorPage({super.key});
+
+  @override
+  State<RucValidatorPage> createState() => _RucValidatorPageState();
+}
+
+class _RucValidatorPageState extends State<RucValidatorPage> {
   final _formKey = GlobalKey<FormState>();
+
+  TypeIdentification typeIdentification = TypeIdentification.ruc;
+
   final List<String> identifications = [
     '0105566046000',
     '3095566046001',
@@ -12,6 +21,7 @@ class RucValidatorPage extends StatelessWidget {
     '0105566039001',
     '0105566046001',
   ];
+
   final List<String> identificationsPrivate = [
     '1790011674001',
     '09A2256230001',
@@ -23,6 +33,7 @@ class RucValidatorPage extends StatelessWidget {
     '0992256234001',
     '1790450637001',
   ];
+
   final List<String> identificationsPublic = [
     '1760004650001',
     '1760001120001',
@@ -42,8 +53,10 @@ class RucValidatorPage extends StatelessWidget {
     '1760004611001',
     '0992256223001',
   ];
+
   @override
   Widget build(BuildContext context) {
+    List<String> listRucTest = [...listRuc];
     return Scaffold(
         appBar: AppBar(
           title: const Text('EC RUC Validator', style: TextStyle(color: Colors.white),),
@@ -65,6 +78,42 @@ class RucValidatorPage extends StatelessWidget {
                           style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 6,),
+                        DropdownButtonFormField<TypeIdentification>(
+                          decoration: InputDecoration(
+                            labelText: 'Identification type',
+                            hintText: 'Identification type',
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(24),
+                            )
+                          ),
+                          value: typeIdentification,
+                          items: TypeIdentification.values.where( (item) => item != TypeIdentification.dni ).map( (item) => DropdownMenuItem(
+                            value: item,
+                            child: Text(item.toString()),
+                          )).toList(),
+                          onChanged: (value) {
+                            if ( value != null ) {
+                                setState(() {
+                                  typeIdentification = value;
+                                  switch (typeIdentification) {
+                                    case TypeIdentification.rucPersonNatural:
+                                      listRucTest = identifications;
+                                      break;
+                                    case TypeIdentification.rucSocietyPrivate:
+                                      listRucTest = identificationsPrivate;
+                                      break;
+                                    case TypeIdentification.rucPublicSociety:
+                                      listRucTest = identificationsPublic;
+                                      break;
+                                    default:
+                                      listRucTest = listRuc;
+                                  }
+                                });
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 6,),
                         TextFormField(
                           decoration: InputDecoration(
                             labelText: 'RUC',
@@ -75,8 +124,13 @@ class RucValidatorPage extends StatelessWidget {
                             )
                           ),
                           validator: (value) {
-                            final result = DniValidator.isValid(value ?? '');
-                            return result.isValid ? null : result.errorMessage;
+                            if( typeIdentification != TypeIdentification.ruc ) {
+                              final result = RucValidator.validateRucByType(value ?? '', typeIdentification);
+                              return result.isValid ? null : result.errorMessage;
+                            } else {
+                              final result = RucValidator.validateRuc(value ?? '');
+                              return result.isValid ? null : result.errorMessage;
+                            }
                           },
                         ),
                         const SizedBox(height: 10),
@@ -104,10 +158,15 @@ class RucValidatorPage extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-              itemCount: listRuc.length,
+              itemCount: listRucTest.length,
               itemBuilder: (context, index) {
-                final identification = listRuc[index];
-                final result = RucValidator.validateRuc(identification);
+                final identification = listRucTest[index];
+                IdentificationResult result;
+                if ( typeIdentification != TypeIdentification.ruc ) {
+                  result = RucValidator.validateRucByType(identification, typeIdentification);
+                } else {
+                  result = RucValidator.validateRuc(identification);
+                }
                 return Card(
                   child: ListTile(
                     title: Text(identification),
