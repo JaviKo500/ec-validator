@@ -12,6 +12,17 @@ class RucValidatorPage extends StatelessWidget {
     '0105566039001',
     '0105566046001',
   ];
+  final List<String> identificationsPrivate = [
+    '1790011674001',
+    '09A2256230001',
+    '3092256230001',
+    '0992256230000',
+    '0982256230001',
+    '0992256230001',
+    '1790450635001',
+    '0992256234001',
+    '1790450637001',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,10 +85,10 @@ class RucValidatorPage extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-              itemCount: identifications.length,
+              itemCount: identificationsPrivate.length,
               itemBuilder: (context, index) {
-                final identification = identifications[index];
-                final result = RucValidator.validateRucByType(identification, TypeIdentification.rucPersonNatural);
+                final identification = identificationsPrivate[index];
+                final result = RucValidator.validateRucByType(identification, TypeIdentification.rucSocietyPrivate);
                 return Card(
                   child: ListTile(
                     title: Text(identification),

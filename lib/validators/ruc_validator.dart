@@ -17,6 +17,9 @@ class RucValidator {
           algorithm10(ruc.substring(0, 9), ruc.substring(9, 10));
           break;
         case TypeIdentification.rucSocietyPrivate:
+          validateThirdDigit(ruc.substring(2, 3), typeIdentification);
+          validateCodeEstablishment(ruc.substring(10, 13));
+          algorithm11(ruc.substring(0,9), ruc.substring(9, 10), typeIdentification);
           break;
         case TypeIdentification.rucPublicSociety:
           break;

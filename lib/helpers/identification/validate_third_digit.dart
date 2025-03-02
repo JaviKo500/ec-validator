@@ -24,7 +24,7 @@ void validateThirdDigit ( String thirdDigit, TypeIdentification typeIdentificati
       if ( thirdDigitInt != 9 ) {
         throw IdentificationException(
           ErrorCode.invalidThirdDigit,
-          'Invalid third digit: must be a number between 0 and 5.'
+          'Invalid third digit: must be a number equal to 9.'
         );
       }
       break;
@@ -32,7 +32,7 @@ void validateThirdDigit ( String thirdDigit, TypeIdentification typeIdentificati
       if ( thirdDigitInt != 6 ) {
         throw IdentificationException(
           ErrorCode.invalidThirdDigit,
-          'Invalid third digit: must be a number between 0 and 5.'
+          'Invalid third digit: must be a number equal to 6.'
         );
       }
       break;

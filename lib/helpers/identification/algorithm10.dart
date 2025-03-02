@@ -13,7 +13,7 @@ bool algorithm10 ( String  firstDigits, String verificationDigitString ) {
   const listCoefficients = [2, 1, 2, 1, 2, 1, 2, 1, 2];
 
   int total= 0;
-  for (var i = 0; i < listCoefficients.length; i++) {
+  for (int i = 0; i < listCoefficients.length; i++) {
     final coefficient = listCoefficients[i];
     final digit = int.tryParse(firstDigits[i]);
 
