@@ -62,132 +62,129 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
           title: const Text('EC RUC Validator', style: TextStyle(color: Colors.white),),
           backgroundColor: Colors.purple,
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                      children: [
-                        const Text(
-                          'Form',
-                          style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 6,),
-                        DropdownButtonFormField<TypeIdentification>(
-                          decoration: InputDecoration(
-                            labelText: 'Identification type',
-                            hintText: 'Identification type',
-                            hintStyle: const TextStyle(color: Colors.grey),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            )
-                          ),
-                          value: typeIdentification,
-                          items: TypeIdentification.values.where( (item) => item != TypeIdentification.dni ).map( (item) => DropdownMenuItem(
-                            value: item,
-                            child: Text(item.toString()),
-                          )).toList(),
-                          onChanged: (value) {
-                            if ( value != null ) {
-                                setState(() {
-                                  typeIdentification = value;
-                                  switch (typeIdentification) {
-                                    case TypeIdentification.rucPersonNatural:
-                                      listRucTest = identifications;
-                                      break;
-                                    case TypeIdentification.rucSocietyPrivate:
-                                      listRucTest = identificationsPrivate;
-                                      break;
-                                    case TypeIdentification.rucPublicSociety:
-                                      listRucTest = identificationsPublic;
-                                      break;
-                                    default:
-                                      listRucTest = listRuc;
-                                  }
-                                });
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 6,),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'RUC',
-                            hintText: '0100000000001',
-                            hintStyle: const TextStyle(color: Colors.grey),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24),
-                            )
-                          ),
-                          validator: (value) {
-                            if( typeIdentification != TypeIdentification.ruc ) {
-                              final result = RucValidator.validateRucByType(value ?? '', typeIdentification);
-                              return result.isValid ? null : result.errorMessage;
-                            } else {
-                              final result = RucValidator.validateRuc(value ?? '');
-                              return result.isValid ? null : result.errorMessage;
-                            }
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            _formKey.currentState?.validate();
-                          }, 
-                          child: const Text('Validate'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            _formKey.currentState?.reset();
-                          }, 
-                          child: const Text('Reset', style: TextStyle(color: Colors.purple,),),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Form',
+                  style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                  children: [
+                    const SizedBox(height: 6,),
+                    DropdownButtonFormField<TypeIdentification>(
+                      decoration: InputDecoration(
+                        labelText: 'Identification type',
+                        hintText: 'Identification type',
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
                         )
-                      ],
-                    )),
-                  )
-                ],
-              )
-            ),
-            const Text(
-              'Examples',
-              style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Expanded(
-              child: ListView.builder(
-              itemCount: listRucTest.length,
-              itemBuilder: (context, index) {
-                final identification = listRucTest[index];
-                IdentificationResult result;
-                if ( typeIdentification != TypeIdentification.ruc ) {
-                  result = RucValidator.validateRucByType(identification, typeIdentification);
-                } else {
-                  result = RucValidator.validateRuc(identification);
-                }
-                return Card(
-                  child: ListTile(
-                    title: Text(identification),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('isValid: ${result.isValid.toString()}',
-                            style: const TextStyle()),
-                        Text(
-                            'Error code: ${result.typeCodeError?.toString() ?? ''}',
-                            style: const TextStyle()),
-                        Text('Error message: ${result.errorMessage ?? ''}',
-                            style: const TextStyle()),
-                      ],
+                      ),
+                      value: typeIdentification,
+                      items: TypeIdentification.values.where( (item) => item != TypeIdentification.dni ).map( (item) => DropdownMenuItem(
+                        value: item,
+                        child: Text(item.toString()),
+                      )).toList(),
+                      onChanged: (value) {
+                        if ( value != null ) {
+                            setState(() {
+                              typeIdentification = value;
+                              switch (typeIdentification) {
+                                case TypeIdentification.rucPersonNatural:
+                                  listRucTest = identifications;
+                                  break;
+                                case TypeIdentification.rucSocietyPrivate:
+                                  listRucTest = identificationsPrivate;
+                                  break;
+                                case TypeIdentification.rucPublicSociety:
+                                  listRucTest = identificationsPublic;
+                                  break;
+                                default:
+                                  listRucTest = listRuc;
+                              }
+                            });
+                        }
+                      },
                     ),
-                  ),
-                );
-              },
+                    const SizedBox(height: 6,),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'RUC',
+                        hintText: '0100000000001',
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                        )
+                      ),
+                      validator: (value) {
+                        if( typeIdentification != TypeIdentification.ruc ) {
+                          final result = RucValidator.validateRucByType(value ?? '', typeIdentification);
+                          return result.isValid ? null : result.errorMessage;
+                        } else {
+                          final result = RucValidator.validateRuc(value ?? '');
+                          return result.isValid ? null : result.errorMessage;
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        _formKey.currentState?.validate();
+                      }, 
+                      child: const Text('Validate'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _formKey.currentState?.reset();
+                      }, 
+                      child: const Text('Reset', style: TextStyle(color: Colors.purple,),),
+                    )
+                  ],
+                )),
+                const Text(
+                  'Examples',
+                  style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: listRucTest.length,
+                itemBuilder: (context, index) {
+                  final identification = listRucTest[index];
+                  IdentificationResult result;
+                  if ( typeIdentification != TypeIdentification.ruc ) {
+                    result = RucValidator.validateRucByType(identification, typeIdentification);
+                  } else {
+                    result = RucValidator.validateRuc(identification);
+                  }
+                  return Card(
+                    child: ListTile(
+                      title: Text(identification),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('isValid: ${result.isValid.toString()}',
+                              style: const TextStyle()),
+                          Text(
+                              'Error code: ${result.typeCodeError?.toString() ?? ''}',
+                              style: const TextStyle()),
+                          Text('Error message: ${result.errorMessage ?? ''}',
+                              style: const TextStyle()),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                              ),
+              ],
             ),
-            ),
-          ],
+          ),
         ));
   }
 }
