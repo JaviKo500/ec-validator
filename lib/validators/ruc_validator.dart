@@ -52,4 +52,22 @@ class RucValidator {
       );
     }
   }
+
+  static IdentificationResult validateRuc ( String ruc ){
+    final validRucNatural = validateRucByType(ruc, TypeIdentification.rucPersonNatural);
+    final validRucPrivate = validateRucByType(ruc, TypeIdentification.rucSocietyPrivate);
+    final validRucPublic = validateRucByType(ruc, TypeIdentification.rucPublicSociety);
+    if ( !validRucNatural.isValid && !validRucPrivate.isValid && !validRucPublic.isValid ) {
+      return IdentificationResult(
+        isValid: false,
+        errorMessage: validRucNatural.errorMessage ?? validRucPrivate.errorMessage ?? validRucPublic.errorMessage,
+        typeCodeError: validRucPublic.typeCodeError ?? validRucPrivate.typeCodeError ?? validRucNatural.typeCodeError,
+      );
+    }
+    return IdentificationResult(
+      isValid: true,
+      errorMessage: null,
+      typeCodeError: null,
+    );
+  }
 }
