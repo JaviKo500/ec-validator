@@ -1,7 +1,7 @@
-import 'package:ec_validator/entities/index.dart';
-import 'package:ec_validator/exceptions/index.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:ec_validator/entities/index.dart';
+import 'package:ec_validator/exceptions/index.dart';
 import 'package:ec_validator/helpers/index.dart';
 
 void main() {
