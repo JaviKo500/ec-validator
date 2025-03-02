@@ -1,3 +1,4 @@
+import 'package:ec_validator/entities/index.dart';
 import 'package:ec_validator/validators/index.dart';
 import 'package:flutter/material.dart';
 
@@ -5,10 +6,11 @@ class RucValidatorPage extends StatelessWidget {
   RucValidatorPage({super.key});
   final _formKey = GlobalKey<FormState>();
   final List<String> identifications = [
-      '0195566046',
-      '0105566039',
-      '0105566046',
-    ];
+    '3095566046001',
+    '95566046001',
+    '0105566039001',
+    '0105566046001',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +76,7 @@ class RucValidatorPage extends StatelessWidget {
               itemCount: identifications.length,
               itemBuilder: (context, index) {
                 final identification = identifications[index];
-                final result = DniValidator.isValid(identification);
+                final result = RucValidator.validateRucByType(identification, TypeIdentification.rucPersonNatural);
                 return Card(
                   child: ListTile(
                     title: Text(identification),
