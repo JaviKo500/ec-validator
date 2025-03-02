@@ -1,6 +1,6 @@
-import 'package:ec_validator/entities/index.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:ec_validator/entities/index.dart';
 import 'package:ec_validator/validators/index.dart';
 
 void main() {
