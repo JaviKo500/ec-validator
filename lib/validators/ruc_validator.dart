@@ -10,6 +10,22 @@ class RucValidator {
     try {
       initValidate(ruc, typeIdentification);
       validateCodeProvince(ruc.substring(0, 2));
+      switch (typeIdentification) {
+        case TypeIdentification.rucPersonNatural:
+          validateThirdDigit(ruc.substring(2, 3), typeIdentification);
+          validateCodeEstablishment(ruc.substring(10, 13));
+          algorithm10(ruc.substring(0, 9), ruc.substring(9, 10));
+          break;
+        case TypeIdentification.rucSocietyPrivate:
+          break;
+        case TypeIdentification.rucPublicSociety:
+          break;
+        default:
+          throw IdentificationException(
+            ErrorCode.invalidType,
+            'Invalid identification type'
+          );
+      }
       return IdentificationResult(
         isValid: true,
         errorMessage: null,

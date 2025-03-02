@@ -6,6 +6,7 @@ class RucValidatorPage extends StatelessWidget {
   RucValidatorPage({super.key});
   final _formKey = GlobalKey<FormState>();
   final List<String> identifications = [
+    '0105566046000',
     '3095566046001',
     '95566046001',
     '0105566039001',
