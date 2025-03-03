@@ -1,16 +1,85 @@
+
 # ec_validator
 
-A new Flutter project.
+A library for validating Ecuadorian identification documents (ID card and RUC)."
 
-## Getting Started
+#### Null-Safety, Dart 3, with zero external dependencies
 
-This project is a starting point for a Flutter application.
+#### iOS, Android, Linux, Mac, Web, Windows ready
 
-A few resources to get you started if this is your first Flutter project:
+## **Installation**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 1. Depend on it
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Add this to your package's `pubspec.yaml` file:
+
+```yaml
+dependencies:
+    ec_validator: '^1.0.0+1'
+```
+
+
+#### 2. Install it
+
+You can install packages from the command line:
+
+```bash
+$ pub get
+..
+```
+
+Alternatively, your editor might support pub. Check the docs for your editor to learn more.
+
+#### 3. Import it
+
+Now in your Dart code, you can use:
+
+```Dart
+import 'package:ec_validator/entities/index.dart';
+```
+
+## Usage/Examples
+
+```dart
+void main() {
+  final result = DniValidator
+   .isValid('0105566046');
+  /**
+   * isValid: true or false
+   * errorMessage: null or error string message
+   * typeCodeError: null or error code
+  */
+  final resultRucPerson = RucValidator
+   .validateRucByType('0105566046001', TypeIdentification.rucPersonNatural);
+  /**
+   * isValid: true or false
+   * errorMessage: null or error string message
+   * typeCodeError: null or error code
+  */
+  final resultRuc = RucValidator.validateRuc('0105566046001');
+  /**
+   * isValid: true or false
+   * errorMessage: null or error string message
+   * typeCodeError: null or error code
+  */
+}
+```
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  flutter test
+```
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Authors
+
+- [@JaviKo500](https://www.github.com/JaviKo500)
+
