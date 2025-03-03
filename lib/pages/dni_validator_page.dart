@@ -1,9 +1,16 @@
 import 'package:ec_validator/validators/index.dart';
 import 'package:flutter/material.dart';
 
-class DniValidatorPage extends StatelessWidget {
-  DniValidatorPage({super.key});
+class DniValidatorPage extends StatefulWidget {
+  const DniValidatorPage({super.key});
+
+  @override
+  State<DniValidatorPage> createState() => _DniValidatorPageState();
+}
+
+class _DniValidatorPageState extends State<DniValidatorPage> {
   final _formKey = GlobalKey<FormState>();
+
   final List<String> identifications = [
     '0195566046',
     '0105566039',
@@ -13,6 +20,7 @@ class DniValidatorPage extends StatelessWidget {
     '3212121212',
     '2712121212',
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,22 +50,36 @@ class DniValidatorPage extends StatelessWidget {
                           height: 6,
                         ),
                         TextFormField(
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                               labelText: 'DNI',
                               hintText: '0100000000',
                               hintStyle: const TextStyle(color: Colors.grey),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(24),
-                              )),
+                              ),
+                              errorMaxLines: 3,
+                          ),
                           validator: (value) {
                             final result = DniValidator.isValid(value ?? '');
                             return result.isValid ? null : result.errorMessage;
                           },
                         ),
                         const SizedBox(height: 10),
+                        _formKey.currentState?.validate() == true
+                        ? const Text(
+                          'Valid Dni',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          )
+                        )
+                        : const SizedBox(),
                         ElevatedButton(
                           onPressed: () {
                             _formKey.currentState?.validate();
+                            setState(() {});
                           },
                           child: const Text('Validate'),
                         ),

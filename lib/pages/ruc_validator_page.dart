@@ -114,13 +114,15 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                     ),
                     const SizedBox(height: 6,),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         labelText: 'RUC',
                         hintText: '0100000000001',
                         hintStyle: const TextStyle(color: Colors.grey),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(24),
-                        )
+                        ),
+                        errorMaxLines: 3,
                       ),
                       validator: (value) {
                         if( typeIdentification != TypeIdentification.ruc ) {
@@ -133,9 +135,20 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                       },
                     ),
                     const SizedBox(height: 10),
+                    _formKey.currentState?.validate() == true
+                        ? const Text(
+                          'Valid RUC',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          )
+                        )
+                        : const SizedBox(),
                     ElevatedButton(
                       onPressed: () {
                         _formKey.currentState?.validate();
+                        setState(() {});
                       }, 
                       child: const Text('Validate'),
                     ),
