@@ -76,7 +76,7 @@ To run tests, run the following command
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[LICENSE](LICENSE)
 
 
 ## Authors
