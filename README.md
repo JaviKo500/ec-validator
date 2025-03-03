@@ -7,6 +7,9 @@ A library for validating Ecuadorian identification documents (ID card and RUC)."
 
 #### iOS, Android, Linux, Mac, Web, Windows ready
 
+![ec_validator demo dni](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/dni_validator.png 'Ec_validator')
+![ec_validator demo ruc](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/ruc_validator.png 'Ec_validator')
+
 ## **Installation**
 
 ### 1. Depend on it
