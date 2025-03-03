@@ -7,6 +7,12 @@ A library for validating Ecuadorian identification documents (ID card and RUC)."
 
 #### iOS, Android, Linux, Mac, Web, Windows ready
 
+![ec_validator demo ](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/validator.png 'Ec_validator')
+
+## Documentation
+
+[Documentation](https://medium.com/@bryansuarez/c%C3%B3mo-validar-c%C3%A9dula-y-ruc-en-ecuador-b62c5666186f)
+
 ## **Installation**
 
 ### 1. Depend on it
@@ -40,6 +46,8 @@ import 'package:ec_validator/entities/index.dart';
 
 ## Usage/Examples
 
+For complete examples, check the `example` folder inside the repository
+
 ```dart
 void main() {
   final result = DniValidator
@@ -64,6 +72,12 @@ void main() {
   */
 }
 ```
+#### Demo form valid DNI
+![ec_validator form_dni ](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/valid_dni.png 'Ec_validator')
+
+#### Demo form valid RUC
+
+![ec_validator form_ruc ](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/valid_ruc.png 'Ec_validator')
 
 ## Running Tests
 
@@ -76,7 +90,7 @@ To run tests, run the following command
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[LICENSE](LICENSE)
 
 
 ## Authors
