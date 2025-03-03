@@ -42,6 +42,8 @@ import 'package:ec_validator/entities/index.dart';
 
 ## Usage/Examples
 
+For complete examples, check the `example` folder inside the repository
+
 ```dart
 void main() {
   final result = DniValidator
@@ -66,6 +68,12 @@ void main() {
   */
 }
 ```
+#### Demo form valid DNI
+![ec_validator form_dni ](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/valid_dni.png 'Ec_validator')
+
+#### Demo form valid RUC
+
+![ec_validator form_ruc ](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/valid_ruc.png 'Ec_validator')
 
 ## Running Tests
 
