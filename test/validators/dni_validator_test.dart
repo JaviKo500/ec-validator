@@ -6,7 +6,7 @@ import 'package:ec_validator/validators/index.dart';
 void main() {
   group('Dni Validator Tests', () {
     test('Should return true if identification is valid', () {
-      final result = DniValidator.isValid('0105566046');
+      final result = DniValidator.isValid('0950064550');
       expect(result.isValid, true);
       expect(result.errorMessage, null);
       expect(result.typeCodeError, null);
