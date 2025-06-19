@@ -4,6 +4,7 @@ enum TypeIdentification {
   rucPersonNatural,
   rucSocietyPrivate,
   rucPublicSociety,
+  possiblyValidRuc,
 }
 
 class IdentificationResult {

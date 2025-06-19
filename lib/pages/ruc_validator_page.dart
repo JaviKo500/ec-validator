@@ -105,6 +105,9 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                                 case TypeIdentification.rucPublicSociety:
                                   listRucTest = identificationsPublic;
                                   break;
+                                case TypeIdentification.possiblyValidRuc:
+                                  listRucTest = identificationsPublic;
+                                  break;
                                 default:
                                   listRucTest = listRuc;
                               }
@@ -125,10 +128,13 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                         errorMaxLines: 3,
                       ),
                       validator: (value) {
-                        if( typeIdentification != TypeIdentification.ruc ) {
+                        if ( typeIdentification == TypeIdentification.possiblyValidRuc ) {
+                          final result = RucValidator.isPossiblyValidRuc(value ?? '');
+                          return result.isValid ? null : result.errorMessage;
+                        } else if ( typeIdentification != TypeIdentification.ruc ) {
                           final result = RucValidator.validateRucByType(value ?? '', typeIdentification);
                           return result.isValid ? null : result.errorMessage;
-                        } else {
+                        }else {
                           final result = RucValidator.validateRuc(value ?? '');
                           return result.isValid ? null : result.errorMessage;
                         }
