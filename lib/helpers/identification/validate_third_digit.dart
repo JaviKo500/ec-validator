@@ -13,10 +13,10 @@ void validateThirdDigit ( String thirdDigit, TypeIdentification typeIdentificati
   switch ( typeIdentification ) {
     case TypeIdentification.dni:
     case TypeIdentification.rucPersonNatural:
-      if ( thirdDigitInt < 0 || thirdDigitInt > 5 ) {
+      if ( thirdDigitInt < 0 || thirdDigitInt > 9 ) {
         throw IdentificationException(
           ErrorCode.invalidThirdDigit,
-          'Invalid third digit: must be a number between 0 and 5.'
+          'Invalid third digit: must be a number between 0 and 9.'
         );
       }
       break;
