@@ -14,7 +14,7 @@ void main() {
           isA<IdentificationException>(),
           predicate( (IdentificationException e) =>
             e.code == ErrorCode.invalidCodeProvince
-            && e.message == 'Invalid province code: the first two digits must be a number between 00 and 24.'
+            && e.message == 'Invalid province code: the first two digits must be a number between 00 - 24 and 30 foreign.'
           )
         )
       ));
@@ -28,7 +28,7 @@ void main() {
           isA<IdentificationException>(),
           predicate( (IdentificationException e) =>
             e.code == ErrorCode.invalidCodeProvince
-            && e.message == 'Invalid province code: the first two digits must be a number between 00 and 24.'
+            && e.message == 'Invalid province code: the first two digits must be a number between 00 - 24 and 30 foreign.'
           )
         )
       ));
@@ -42,13 +42,13 @@ void main() {
           isA<IdentificationException>(),
           predicate( (IdentificationException e) =>
             e.code == ErrorCode.invalidCodeProvince
-            && e.message == 'Invalid province code: the first two digits must be a number between 00 and 24.'
+            && e.message == 'Invalid province code: the first two digits must be a number between 00 - 24 and 30 foreign.'
           )
         )
       ));
     });
 
-    test('Should throw exception if code province is greater than 24', () {
+    test('Should throw exception if code province is greater than 24 and not 30', () {
       expect( () {
         validateCodeProvince('25');
       }, throwsA(
@@ -56,7 +56,7 @@ void main() {
           isA<IdentificationException>(),
           predicate( (IdentificationException e) =>
             e.code == ErrorCode.invalidCodeProvince
-            && e.message == 'Invalid province code: the first two digits must be a number between 00 and 24.'
+            && e.message == 'Invalid province code: the first two digits must be a number between 00 - 24 and 30 foreign.'
           )
         )
       ));

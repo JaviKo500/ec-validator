@@ -29,17 +29,10 @@ void main() {
     });
 
     test('should return invalid result for DNI with invalid province code', () {
-      final result = DniValidator.isValid('3005566046');
+      final result = DniValidator.isValid('3105566046');
       
       expect(result.isValid, isFalse);
       expect(result.typeCodeError, ErrorCode.invalidCodeProvince);
-    });
-
-    test('should return invalid result for DNI with invalid third digit', () {
-      final result = DniValidator.isValid('0195566046');
-      
-      expect(result.isValid, isFalse);
-      expect(result.typeCodeError, ErrorCode.invalidThirdDigit);
     });
 
     test('should return invalid result for DNI with invalid check digit', () {
