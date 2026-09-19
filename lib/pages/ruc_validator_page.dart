@@ -1,6 +1,7 @@
-import 'package:ec_validator/entities/index.dart';
-import 'package:ec_validator/validators/index.dart';
+import 'package:ec_validator/shared/lang_choice_options.dart';
 import 'package:flutter/material.dart';
+
+import 'package:ec_validations/ec_validations.dart';
 
 class RucValidatorPage extends StatefulWidget {
   const RucValidatorPage({super.key});
@@ -54,9 +55,35 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
     '0992256223001',
   ];
 
+  /// Validates using the method that matches the selected type.
+  IdentificationResult validate(String ruc) {
+    switch (typeIdentification) {
+      case TypeIdentification.possiblyValidRuc:
+        return RucValidator.isPossiblyValidRuc(ruc);
+      case TypeIdentification.ruc:
+        return RucValidator.validateRuc(ruc);
+      default:
+        return RucValidator.validateRucByType(ruc, typeIdentification);
+    }
+  }
+
+  /// Sample RUC numbers shown for the selected type.
+  List<String> get listRucTest {
+    switch (typeIdentification) {
+      case TypeIdentification.rucPersonNatural:
+        return identifications;
+      case TypeIdentification.rucSocietyPrivate:
+        return identificationsPrivate;
+      case TypeIdentification.rucPublicSociety:
+      case TypeIdentification.possiblyValidRuc:
+        return identificationsPublic;
+      default:
+        return listRuc;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> listRucTest = [...listRuc];
     return Scaffold(
         appBar: AppBar(
           title: const Text('EC RUC Validator', style: TextStyle(color: Colors.white),),
@@ -68,6 +95,9 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                LangChoiceOptions(
+                  action: () => setState(() {}),
+                ),
                 const Text(
                   'Form',
                   style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
@@ -86,32 +116,16 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                           borderRadius: BorderRadius.circular(24),
                         )
                       ),
-                      value: typeIdentification,
+                      initialValue: typeIdentification,
                       items: TypeIdentification.values.where( (item) => item != TypeIdentification.dni ).map( (item) => DropdownMenuItem(
                         value: item,
-                        child: Text(item.toString()),
+                        child: Text(item.name),
                       )).toList(),
                       onChanged: (value) {
                         if ( value != null ) {
-                            setState(() {
-                              typeIdentification = value;
-                              switch (typeIdentification) {
-                                case TypeIdentification.rucPersonNatural:
-                                  listRucTest = identifications;
-                                  break;
-                                case TypeIdentification.rucSocietyPrivate:
-                                  listRucTest = identificationsPrivate;
-                                  break;
-                                case TypeIdentification.rucPublicSociety:
-                                  listRucTest = identificationsPublic;
-                                  break;
-                                case TypeIdentification.possiblyValidRuc:
-                                  listRucTest = identificationsPublic;
-                                  break;
-                                default:
-                                  listRucTest = listRuc;
-                              }
-                            });
+                          setState(() {
+                            typeIdentification = value;
+                          });
                         }
                       },
                     ),
@@ -128,16 +142,8 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                         errorMaxLines: 3,
                       ),
                       validator: (value) {
-                        if ( typeIdentification == TypeIdentification.possiblyValidRuc ) {
-                          final result = RucValidator.isPossiblyValidRuc(value ?? '');
-                          return result.isValid ? null : result.errorMessage;
-                        } else if ( typeIdentification != TypeIdentification.ruc ) {
-                          final result = RucValidator.validateRucByType(value ?? '', typeIdentification);
-                          return result.isValid ? null : result.errorMessage;
-                        }else {
-                          final result = RucValidator.validateRuc(value ?? '');
-                          return result.isValid ? null : result.errorMessage;
-                        }
+                        final result = validate(value ?? '');
+                        return result.isValid ? null : result.errorMessage;
                       },
                     ),
                     const SizedBox(height: 10),
@@ -155,13 +161,13 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                       onPressed: () {
                         _formKey.currentState?.validate();
                         setState(() {});
-                      }, 
+                      },
                       child: const Text('Validate'),
                     ),
                     TextButton(
                       onPressed: () {
                         _formKey.currentState?.reset();
-                      }, 
+                      },
                       child: const Text('Reset', style: TextStyle(color: Colors.purple,),),
                     )
                   ],
@@ -176,12 +182,7 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                 itemCount: listRucTest.length,
                 itemBuilder: (context, index) {
                   final identification = listRucTest[index];
-                  IdentificationResult result;
-                  if ( typeIdentification != TypeIdentification.ruc ) {
-                    result = RucValidator.validateRucByType(identification, typeIdentification);
-                  } else {
-                    result = RucValidator.validateRuc(identification);
-                  }
+                  final result = validate(identification);
                   return Card(
                     child: ListTile(
                       title: Text(identification),
@@ -194,6 +195,9 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
                               'Error code: ${result.typeCodeError?.toString() ?? ''}',
                               style: const TextStyle()),
                           Text('Error message: ${result.errorMessage ?? ''}',
+                              style: const TextStyle()),
+                          Text(
+                              'Message in EN: ${result.messageIn(EcMessagesEn()) ?? ''}',
                               style: const TextStyle()),
                         ],
                       ),

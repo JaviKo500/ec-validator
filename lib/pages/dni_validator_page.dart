@@ -1,5 +1,7 @@
-import 'package:ec_validator/validators/index.dart';
+import 'package:ec_validator/shared/lang_choice_options.dart';
 import 'package:flutter/material.dart';
+
+import 'package:ec_validations/ec_validations.dart';
 
 class DniValidatorPage extends StatefulWidget {
   const DniValidatorPage({super.key});
@@ -38,6 +40,9 @@ class _DniValidatorPageState extends State<DniValidatorPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                LangChoiceOptions(
+                  action: () => setState(() {}),
+                ),
                 const Text(
                   'Form',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -119,6 +124,9 @@ class _DniValidatorPageState extends State<DniValidatorPage> {
                                 'Error code: ${result.typeCodeError?.toString() ?? ''}',
                                 style: const TextStyle()),
                             Text('Error message: ${result.errorMessage ?? ''}',
+                                style: const TextStyle()),
+                            Text(
+                                'Message in EN: ${result.messageIn(EcMessagesEn()) ?? ''}',
                                 style: const TextStyle()),
                           ],
                         ),

@@ -110,7 +110,7 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
                       initialValue: phoneMode,
                       items: PhoneMode.values.map( (item) => DropdownMenuItem(
                         value: item,
-                        child: Text(item.toString()),
+                        child: Text(item.name),
                       )).toList(),
                       onChanged: (value) {
                         if ( value != null ) {
@@ -201,6 +201,9 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
                                 'Error code: ${result.typeCodeError?.toString() ?? ''}',
                                 style: const TextStyle()),
                             Text('Error message: ${result.errorMessage ?? ''}',
+                                style: const TextStyle()),
+                            Text(
+                                'Message in EN: ${result.messageIn(EcMessagesEn()) ?? ''}',
                                 style: const TextStyle()),
                           ],
                         ),
