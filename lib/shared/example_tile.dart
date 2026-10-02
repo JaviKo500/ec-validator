@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/app_theme.dart';
 import 'package:ec_validator/shared/demo_result.dart';
 
@@ -22,12 +23,13 @@ class ExampleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
+    final strings = AppStrings.of(context);
     final statusColor = result.isValid ? scheme.success : scheme.error;
     final detail = result.isValid
         ? (result.normalizedNumber != null
-              ? 'Normalized: ${result.normalizedNumber}'
-              : 'Valid')
-        : result.errorMessage ?? 'Invalid';
+              ? '${strings.normalized}: ${result.normalizedNumber}'
+              : strings.valid)
+        : result.errorMessage ?? strings.invalid;
 
     return Card(
       color: selected ? scheme.secondaryContainer : null,
@@ -41,7 +43,7 @@ class ExampleTile extends StatelessWidget {
               Icon(
                 result.isValid ? Icons.check_circle : Icons.cancel,
                 color: statusColor,
-                semanticLabel: result.isValid ? 'Valid' : 'Invalid',
+                semanticLabel: result.isValid ? strings.valid : strings.invalid,
               ),
               const SizedBox(width: 12),
               Expanded(

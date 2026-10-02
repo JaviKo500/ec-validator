@@ -79,6 +79,17 @@
     <p>Loading ec_validations demo…</p>
   </div>
   <script>
+    (function () {
+      var lang = (navigator.language || 'en').slice(0, 2);
+      var texts = {
+        es: 'Cargando demo de ec_validations…',
+        pt: 'Carregando demonstração do ec_validations…'
+      };
+      if (texts[lang]) {
+        document.documentElement.lang = lang;
+        document.querySelector('#loading p').textContent = texts[lang];
+      }
+    })();
     window.addEventListener('flutter-first-frame', function () {
       var loading = document.getElementById('loading');
       if (!loading) return;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/app_theme.dart';
 import 'package:ec_validator/shared/demo_result.dart';
 import 'package:ec_validator/shared/messages_locale.dart';
@@ -25,6 +26,7 @@ class ResultPanel extends StatelessWidget {
     final foreground = result.isValid
         ? scheme.onSuccessContainer
         : scheme.onErrorContainer;
+    final strings = AppStrings.of(context);
     final locale = messagesLocale.value.toUpperCase();
 
     return Container(
@@ -45,7 +47,7 @@ class ResultPanel extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                result.isValid ? 'Valid' : 'Invalid',
+                result.isValid ? strings.valid : strings.invalid,
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: foreground,
                   fontWeight: FontWeight.w600,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ec_validator/pages/index.dart';
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/language_selector.dart';
 
 /// Below this width the app uses a bottom navigation bar.
@@ -12,15 +13,15 @@ const double _extendedBreakpoint = 1100;
 class _Destination {
   final IconData icon;
   final IconData selectedIcon;
-  final String label;
+  final String Function(AppStrings strings) label;
 
   const _Destination(this.icon, this.selectedIcon, this.label);
 }
 
-const _destinations = [
-  _Destination(Icons.badge_outlined, Icons.badge, 'ID card'),
-  _Destination(Icons.business_outlined, Icons.business, 'RUC'),
-  _Destination(Icons.phone_outlined, Icons.phone, 'Phone'),
+final _destinations = [
+  _Destination(Icons.badge_outlined, Icons.badge, (s) => s.navDni),
+  _Destination(Icons.business_outlined, Icons.business, (s) => s.navRuc),
+  _Destination(Icons.phone_outlined, Icons.phone, (s) => s.navPhone),
 ];
 
 /// Responsive scaffold: bottom bar on phones, navigation rail on wider screens.
@@ -41,6 +42,7 @@ class _AppShellState extends State<AppShell> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final compact = width < _compactBreakpoint;
+    final strings = AppStrings.of(context);
 
     // IndexedStack keeps each page's input when switching tabs.
     final pages = IndexedStack(
@@ -77,7 +79,7 @@ class _AppShellState extends State<AppShell> {
                         (destination) => NavigationRailDestination(
                           icon: Icon(destination.icon),
                           selectedIcon: Icon(destination.selectedIcon),
-                          label: Text(destination.label),
+                          label: Text(destination.label(strings)),
                         ),
                       )
                       .toList(),
@@ -95,7 +97,7 @@ class _AppShellState extends State<AppShell> {
                     (destination) => NavigationDestination(
                       icon: Icon(destination.icon),
                       selectedIcon: Icon(destination.selectedIcon),
-                      label: destination.label,
+                      label: destination.label(strings),
                     ),
                   )
                   .toList(),
@@ -146,7 +148,7 @@ class _AppTitle extends StatelessWidget {
                 ),
               ),
               Text(
-                'Interactive demo',
+                AppStrings.of(context).appSubtitle,
                 overflow: TextOverflow.ellipsis,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: scheme.onSurfaceVariant,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ec_validations/ec_validations.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/demo_result.dart';
 import 'package:ec_validator/shared/mode_selector.dart';
 import 'package:ec_validator/shared/validator_demo_page.dart';
@@ -16,39 +17,31 @@ class RucValidatorPage extends StatefulWidget {
 class _RucValidatorPageState extends State<RucValidatorPage> {
   TypeIdentification typeIdentification = TypeIdentification.ruc;
 
-  static const List<DemoMode<TypeIdentification>> modes = [
+  List<DemoMode<TypeIdentification>> modes(AppStrings strings) => [
     DemoMode(
       value: TypeIdentification.ruc,
-      label: 'Any type',
-      description:
-          'Accepts a RUC of a natural person, private company or '
-          'public entity.',
+      label: strings.rucAnyLabel,
+      description: strings.rucAnyDescription,
     ),
     DemoMode(
       value: TypeIdentification.rucPersonNatural,
-      label: 'Natural person',
-      description:
-          'Third digit 0–5: an ID card number followed by the '
-          'establishment code.',
+      label: strings.rucNaturalLabel,
+      description: strings.rucNaturalDescription,
     ),
     DemoMode(
       value: TypeIdentification.rucSocietyPrivate,
-      label: 'Private company',
-      description: 'Third digit 9, modulo 11 check digit.',
+      label: strings.rucPrivateLabel,
+      description: strings.rucPrivateDescription,
     ),
     DemoMode(
       value: TypeIdentification.rucPublicSociety,
-      label: 'Public entity',
-      description:
-          'Third digit 6, modulo 11 check digit on the first 8 '
-          'digits.',
+      label: strings.rucPublicLabel,
+      description: strings.rucPublicDescription,
     ),
     DemoMode(
       value: TypeIdentification.possiblyValidRuc,
-      label: 'Quick check',
-      description:
-          'Checks only the length and the province code, without '
-          'the check digit.',
+      label: strings.rucQuickLabel,
+      description: strings.rucQuickDescription,
     ),
   ];
 
@@ -132,18 +125,18 @@ class _RucValidatorPageState extends State<RucValidatorPage> {
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+
     return ValidatorDemoPage(
-      title: 'RUC',
-      description:
-          'Validates the 13-digit taxpayer number (Registro Único de '
-          'Contribuyentes) by type.',
+      title: strings.rucTitle,
+      description: strings.rucDescription,
       icon: Icons.business_outlined,
-      inputLabel: 'RUC number',
+      inputLabel: strings.rucInputLabel,
       inputHint: '0105566046001',
       keyboardType: TextInputType.number,
       modeSelector: ModeSelector<TypeIdentification>(
-        label: 'RUC type',
-        modes: modes,
+        label: strings.rucTypeLabel,
+        modes: modes(strings),
         selected: typeIdentification,
         onChanged: (value) => setState(() => typeIdentification = value),
       ),

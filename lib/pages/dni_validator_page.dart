@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ec_validations/ec_validations.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/demo_result.dart';
 import 'package:ec_validator/shared/validator_demo_page.dart';
 
@@ -20,13 +21,13 @@ class DniValidatorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+
     return ValidatorDemoPage(
-      title: 'ID card (cédula)',
-      description:
-          'Validates the 10-digit Ecuadorian ID: province code, '
-          'third digit and modulo 10 check digit.',
+      title: strings.dniTitle,
+      description: strings.dniDescription,
       icon: Icons.badge_outlined,
-      inputLabel: 'ID number',
+      inputLabel: strings.dniInputLabel,
       inputHint: '0105566046',
       keyboardType: TextInputType.number,
       validate: (value) =>

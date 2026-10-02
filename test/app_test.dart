@@ -35,8 +35,9 @@ void main() {
         expect(find.text('Valid'), findsWidgets);
       });
 
-      testWidgets('loads a tapped example and switches language',
-          (tester) async {
+      testWidgets('loads a tapped example and switches language', (
+        tester,
+      ) async {
         await pumpAppAt(tester, size);
 
         final example = find.text('01A5566046');
@@ -49,6 +50,28 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('errorMessage (PT)'), findsOneWidget);
         expect(find.textContaining('Identificação inválida'), findsWidgets);
+      });
+
+      testWidgets('translates the app texts with the language', (tester) async {
+        await pumpAppAt(tester, size);
+        expect(find.text('Try it'), findsOneWidget);
+
+        useMessagesLocale('es');
+        await tester.pumpAndSettle();
+        expect(find.text('Pruébalo'), findsOneWidget);
+        expect(find.text('Ejemplos'), findsOneWidget);
+        expect(find.text('Teléfono'), findsOneWidget);
+        expect(find.text('Cédula de identidad'), findsOneWidget);
+
+        await tester.tap(find.text('Teléfono'));
+        await tester.pumpAndSettle();
+        expect(find.text('Internacional'), findsOneWidget);
+
+        useMessagesLocale('pt');
+        await tester.pumpAndSettle();
+        expect(find.text('Telefone'), findsOneWidget);
+        expect(find.text('Experimente'), findsWidgets);
+        expect(find.text('Try it'), findsNothing);
       });
 
       testWidgets('navigates to the RUC and phone pages', (tester) async {

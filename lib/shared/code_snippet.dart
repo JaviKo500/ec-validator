@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
+
 /// Dart code block with a copy button.
 class CodeSnippet extends StatelessWidget {
   final String code;
@@ -12,8 +14,8 @@ class CodeSnippet extends StatelessWidget {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        const SnackBar(
-          content: Text('Code copied to clipboard'),
+        SnackBar(
+          content: Text(AppStrings.of(context).codeCopied),
           behavior: SnackBarBehavior.floating,
           width: 280,
         ),
@@ -54,7 +56,7 @@ class CodeSnippet extends StatelessWidget {
                   onPressed: () => _copy(context),
                   style: TextButton.styleFrom(foregroundColor: foreground),
                   icon: const Icon(Icons.copy_rounded, size: 16),
-                  label: const Text('Copy'),
+                  label: Text(AppStrings.of(context).copy),
                 ),
               ],
             ),

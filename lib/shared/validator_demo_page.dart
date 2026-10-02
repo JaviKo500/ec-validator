@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/code_snippet.dart';
 import 'package:ec_validator/shared/demo_result.dart';
 import 'package:ec_validator/shared/example_tile.dart';
-import 'package:ec_validator/shared/messages_locale.dart';
 import 'package:ec_validator/shared/result_panel.dart';
 
 /// Width from which the playground and the examples sit side by side.
@@ -94,8 +94,10 @@ class _ValidatorDemoPageState extends State<ValidatorDemoPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Rebuilds with the language too, so the messages follow it.
+    AppStrings.of(context);
     return ListenableBuilder(
-      listenable: Listenable.merge([_controller, messagesLocale]),
+      listenable: _controller,
       builder: (context, _) => LayoutBuilder(
         builder: (context, constraints) {
           final width = constraints.maxWidth;
@@ -191,6 +193,7 @@ class _ValidatorDemoPageState extends State<ValidatorDemoPage> {
     final value = _controller.text;
     final hasValue = value.isNotEmpty;
     final result = widget.validate(value);
+    final strings = AppStrings.of(context);
 
     return Card(
       child: Padding(
@@ -198,7 +201,7 @@ class _ValidatorDemoPageState extends State<ValidatorDemoPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Try it', style: theme.textTheme.titleMedium),
+            Text(strings.tryIt, style: theme.textTheme.titleMedium),
             const SizedBox(height: 16),
             if (widget.modeSelector != null) ...[
               widget.modeSelector!,
@@ -216,10 +219,10 @@ class _ValidatorDemoPageState extends State<ValidatorDemoPage> {
                 labelText: widget.inputLabel,
                 hintText: widget.inputHint,
                 prefixIcon: Icon(widget.icon),
-                helperText: 'Validated as you type',
+                helperText: strings.validatedAsYouType,
                 suffixIcon: hasValue
                     ? IconButton(
-                        tooltip: 'Clear',
+                        tooltip: strings.clear,
                         icon: const Icon(Icons.close),
                         onPressed: _controller.clear,
                       )
@@ -247,14 +250,15 @@ class _ValidatorDemoPageState extends State<ValidatorDemoPage> {
 
   Widget _buildExamples(BuildContext context) {
     final theme = Theme.of(context);
+    final strings = AppStrings.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Examples', style: theme.textTheme.titleMedium),
+        Text(strings.examples, style: theme.textTheme.titleMedium),
         const SizedBox(height: 4),
         Text(
-          'Tap any example to load it in the form.',
+          strings.examplesHint,
           style: theme.textTheme.bodySmall?.copyWith(
             color: theme.colorScheme.onSurfaceVariant,
           ),
@@ -295,7 +299,7 @@ class _EmptyResult extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Type a value or pick an example to see the result.',
+              AppStrings.of(context).emptyResult,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: scheme.onSurfaceVariant,
               ),

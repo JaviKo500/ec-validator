@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ec_validations/ec_validations.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/demo_result.dart';
 import 'package:ec_validator/shared/mode_selector.dart';
 import 'package:ec_validator/shared/validator_demo_page.dart';
@@ -19,23 +20,21 @@ class PhoneValidatorPage extends StatefulWidget {
 class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
   PhoneMode phoneMode = PhoneMode.any;
 
-  static const List<DemoMode<PhoneMode>> modes = [
+  List<DemoMode<PhoneMode>> modes(AppStrings strings) => [
     DemoMode(
       value: PhoneMode.any,
-      label: 'Any',
-      description:
-          'Accepts local (0991234567) or international '
-          '(+593991234567) notation.',
+      label: strings.phoneAnyLabel,
+      description: strings.phoneAnyDescription,
     ),
     DemoMode(
       value: PhoneMode.local,
-      label: 'Local',
-      description: 'Only local notation: 09 for mobile, 02–07 for landlines.',
+      label: strings.phoneLocalLabel,
+      description: strings.phoneLocalDescription,
     ),
     DemoMode(
       value: PhoneMode.international,
-      label: 'International',
-      description: 'Only international notation with the +593 country code.',
+      label: strings.phoneInternationalLabel,
+      description: strings.phoneInternationalDescription,
     ),
   ];
 
@@ -107,18 +106,18 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppStrings.of(context);
+
     return ValidatorDemoPage(
-      title: 'Phone number',
-      description:
-          'Validates Ecuadorian mobile and landline numbers and '
-          'returns them normalized.',
+      title: strings.phoneTitle,
+      description: strings.phoneDescription,
       icon: Icons.phone_outlined,
-      inputLabel: 'Phone number',
+      inputLabel: strings.phoneInputLabel,
       inputHint: '0991234567',
       keyboardType: TextInputType.phone,
       modeSelector: ModeSelector<PhoneMode>(
-        label: 'Phone format',
-        modes: modes,
+        label: strings.phoneFormatLabel,
+        modes: modes(strings),
         selected: phoneMode,
         onChanged: (value) => setState(() => phoneMode = value),
       ),

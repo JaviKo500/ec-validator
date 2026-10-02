@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/messages_locale.dart';
 
 /// Picks the language of the validation messages.
@@ -14,14 +15,15 @@ class LanguageSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<String>(
       valueListenable: messagesLocale,
-      builder: (context, current, _) =>
-          compact ? _buildMenu(context, current) : _buildSegments(current),
+      builder: (context, current, _) => compact
+          ? _buildMenu(context, current)
+          : _buildSegments(context, current),
     );
   }
 
-  Widget _buildSegments(String current) {
+  Widget _buildSegments(BuildContext context, String current) {
     return Tooltip(
-      message: 'Language of the validation messages',
+      message: AppStrings.of(context).languageTooltip,
       child: SegmentedButton<String>(
         showSelectedIcon: false,
         style: const ButtonStyle(visualDensity: VisualDensity.compact),
@@ -42,7 +44,7 @@ class LanguageSelector extends StatelessWidget {
 
   Widget _buildMenu(BuildContext context, String current) {
     return PopupMenuButton<String>(
-      tooltip: 'Language of the validation messages',
+      tooltip: AppStrings.of(context).languageTooltip,
       initialValue: current,
       onSelected: useMessagesLocale,
       itemBuilder: (context) => messageLanguages.entries
