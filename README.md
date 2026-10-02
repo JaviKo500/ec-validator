@@ -9,6 +9,15 @@ A library for validating Ecuadorian identification documents (ID card and RUC)."
 
 ![ec_validator demo ](https://github.com/JaviKo500/ec-validator/blob/main/screenshots/validator.png 'Ec_validator')
 
+## Live demo
+
+Try `ec_validations` in your browser, no installation needed:
+**[ec-validations.netlify.app](https://ec-validations.netlify.app/)**
+
+Validate ID cards (cédula), RUC and phone numbers as you type, see every field
+of the result, copy the equivalent Dart code and switch the messages between
+English, Spanish and Portuguese. Works on desktop and mobile browsers.
+
 ## Documentation
 
 [Documentation](https://medium.com/@bryansuarez/c%C3%B3mo-validar-c%C3%A9dula-y-ruc-en-ecuador-b62c5666186f)
