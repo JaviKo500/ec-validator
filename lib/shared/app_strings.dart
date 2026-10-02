@@ -63,6 +63,14 @@ class AppStrings {
   final String phoneInternationalLabel;
   final String phoneInternationalDescription;
 
+  final String about;
+  final String aboutDescription;
+  final String madeBy;
+  final String linkPubDev;
+  final String linkPackageSource;
+  final String linkDemoSource;
+  final String linkIssues;
+
   const AppStrings({
     required this.appTitle,
     required this.appSubtitle,
@@ -108,6 +116,13 @@ class AppStrings {
     required this.phoneLocalDescription,
     required this.phoneInternationalLabel,
     required this.phoneInternationalDescription,
+    required this.about,
+    required this.aboutDescription,
+    required this.madeBy,
+    required this.linkPubDev,
+    required this.linkPackageSource,
+    required this.linkDemoSource,
+    required this.linkIssues,
   });
 
   /// Texts for the selected language; rebuilds [context] when it changes.
@@ -184,6 +199,15 @@ class AppStrings {
     phoneInternationalLabel: 'International',
     phoneInternationalDescription:
         'Only international notation with the +593 country code.',
+    about: 'About',
+    aboutDescription:
+        'This demo uses ec_validations, an open source Dart package to '
+        'validate Ecuadorian ID cards, RUC and phone numbers.',
+    madeBy: 'Made by',
+    linkPubDev: 'pub.dev',
+    linkPackageSource: 'Package source',
+    linkDemoSource: 'Demo source',
+    linkIssues: 'Report an issue',
   );
 
   static const es = AppStrings(
@@ -249,6 +273,15 @@ class AppStrings {
     phoneInternationalLabel: 'Internacional',
     phoneInternationalDescription:
         'Solo notación internacional con el código de país +593.',
+    about: 'Acerca de',
+    aboutDescription:
+        'Esta demo usa ec_validations, un paquete Dart de código abierto para '
+        'validar cédulas, RUC y números de teléfono de Ecuador.',
+    madeBy: 'Creado por',
+    linkPubDev: 'pub.dev',
+    linkPackageSource: 'Código del paquete',
+    linkDemoSource: 'Código de la demo',
+    linkIssues: 'Reportar un problema',
   );
 
   static const pt = AppStrings(
@@ -314,5 +347,14 @@ class AppStrings {
     phoneInternationalLabel: 'Internacional',
     phoneInternationalDescription:
         'Apenas notação internacional com o código do país +593.',
+    about: 'Sobre',
+    aboutDescription:
+        'Esta demonstração usa o ec_validations, um pacote Dart de código '
+        'aberto para validar cédulas, RUC e números de telefone do Equador.',
+    madeBy: 'Criado por',
+    linkPubDev: 'pub.dev',
+    linkPackageSource: 'Código do pacote',
+    linkDemoSource: 'Código da demonstração',
+    linkIssues: 'Relatar um problema',
   );
 }

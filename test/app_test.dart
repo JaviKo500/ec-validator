@@ -74,6 +74,22 @@ void main() {
         expect(find.text('Try it'), findsNothing);
       });
 
+      testWidgets('credits the author and links the project', (tester) async {
+        await pumpAppAt(tester, size);
+
+        final credit = find.text('@JaviKo500').first;
+        await tester.ensureVisible(credit);
+        expect(credit, findsOneWidget);
+        expect(find.text('pub.dev'), findsWidgets);
+        expect(find.text('Report an issue'), findsWidgets);
+
+        if (size.width < 900) {
+          await tester.tap(find.byTooltip('About'));
+          await tester.pumpAndSettle();
+          expect(find.byType(BottomSheet), findsOneWidget);
+        }
+      });
+
       testWidgets('navigates to the RUC and phone pages', (tester) async {
         await pumpAppAt(tester, size);
 

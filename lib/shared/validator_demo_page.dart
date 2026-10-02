@@ -4,6 +4,7 @@ import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/code_snippet.dart';
 import 'package:ec_validator/shared/demo_result.dart';
 import 'package:ec_validator/shared/example_tile.dart';
+import 'package:ec_validator/shared/project_links.dart';
 import 'package:ec_validator/shared/result_panel.dart';
 
 /// Width from which the playground and the examples sit side by side.
@@ -137,6 +138,7 @@ class _ValidatorDemoPageState extends State<ValidatorDemoPage> {
                         const SizedBox(height: 32),
                         examples,
                       ],
+                      const CreditsFooter(),
                     ],
                   ),
                 ),

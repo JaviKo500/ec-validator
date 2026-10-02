@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:ec_validator/pages/index.dart';
 import 'package:ec_validator/shared/app_strings.dart';
 import 'package:ec_validator/shared/language_selector.dart';
+import 'package:ec_validator/shared/project_links.dart';
 
 /// Below this width the app uses a bottom navigation bar.
 const double _compactBreakpoint = 640;
+
+/// From this width the project links fit in the app bar.
+const double _linksBreakpoint = 900;
 
 /// From this width the navigation rail shows its labels beside the icons.
 const double _extendedBreakpoint = 1100;
@@ -47,6 +51,7 @@ class _AppShellState extends State<AppShell> {
     // IndexedStack keeps each page's input when switching tabs.
     final pages = IndexedStack(
       index: _selectedIndex,
+      sizing: StackFit.expand,
       children: const [
         DniValidatorPage(),
         RucValidatorPage(),
@@ -59,6 +64,24 @@ class _AppShellState extends State<AppShell> {
         titleSpacing: compact ? 16 : 24,
         title: const _AppTitle(),
         actions: [
+          if (width >= _linksBreakpoint) ...[
+            ProjectLinkButton(
+              uri: pubDevUrl,
+              icon: Icons.inventory_2_outlined,
+              label: strings.linkPubDev,
+            ),
+            ProjectLinkButton(
+              uri: packageSourceUrl,
+              icon: Icons.code,
+              label: strings.linkPackageSource,
+            ),
+            const SizedBox(width: 12),
+          ] else
+            IconButton(
+              tooltip: strings.about,
+              icon: const Icon(Icons.info_outline),
+              onPressed: () => showAboutSheet(context),
+            ),
           LanguageSelector(compact: compact),
           SizedBox(width: compact ? 8 : 24),
         ],
