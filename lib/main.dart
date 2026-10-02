@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 
-import 'package:ec_validator/shared/bottom_navigator_bar.dart';
+import 'package:ec_validations/ec_validations.dart';
 
-void main() => runApp(const MyApp());
+import 'package:ec_validator/l10n.dart';
+import 'package:ec_validator/shared/app_shell.dart';
+import 'package:ec_validator/shared/app_theme.dart';
+
+void main() {
+  // English and Spanish ship with the package; Portuguese is a custom catalog.
+  EcValidationsL10n.register(EcMessagesPt());
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'EC Validator',
+    return MaterialApp(
+      title: 'ec_validations demo',
       debugShowCheckedModeBanner: false,
-      home: CustomBottomNavigatorBar(),
+      theme: buildAppTheme(Brightness.light),
+      darkTheme: buildAppTheme(Brightness.dark),
+      home: const AppShell(),
     );
   }
 }

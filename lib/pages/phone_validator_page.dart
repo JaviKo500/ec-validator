@@ -1,7 +1,11 @@
-import 'package:ec_validator/shared/lang_choice_options.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ec_validations/ec_validations.dart';
+
+import 'package:ec_validator/shared/demo_result.dart';
+import 'package:ec_validator/shared/mode_selector.dart';
+import 'package:ec_validator/shared/validator_demo_page.dart';
+
 /// Validation mode chosen in the form.
 enum PhoneMode { any, local, international }
 
@@ -13,12 +17,29 @@ class PhoneValidatorPage extends StatefulWidget {
 }
 
 class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
-  final _formKey = GlobalKey<FormState>();
-
   PhoneMode phoneMode = PhoneMode.any;
-  String normalizedPhone = '';
 
-  final List<String> phonesAny = [
+  static const List<DemoMode<PhoneMode>> modes = [
+    DemoMode(
+      value: PhoneMode.any,
+      label: 'Any',
+      description:
+          'Accepts local (0991234567) or international '
+          '(+593991234567) notation.',
+    ),
+    DemoMode(
+      value: PhoneMode.local,
+      label: 'Local',
+      description: 'Only local notation: 09 for mobile, 02–07 for landlines.',
+    ),
+    DemoMode(
+      value: PhoneMode.international,
+      label: 'International',
+      description: 'Only international notation with the +593 country code.',
+    ),
+  ];
+
+  static const List<String> phonesAny = [
     '0991234567',
     '099 123 4567',
     '+593991234567',
@@ -29,7 +50,7 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
     '09912345',
   ];
 
-  final List<String> phonesLocal = [
+  static const List<String> phonesLocal = [
     '0991234567',
     '099 123 4567',
     '(099) 123-4567',
@@ -38,7 +59,7 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
     '+593991234567',
   ];
 
-  final List<String> phonesInternational = [
+  static const List<String> phonesInternational = [
     '+593991234567',
     '00593991234567',
     '593991234567',
@@ -60,6 +81,18 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
     }
   }
 
+  /// Dart call that matches the selected mode.
+  String codeFor(String phoneNumber) {
+    switch (phoneMode) {
+      case PhoneMode.local:
+        return 'PhoneValidator.isValidLocal($phoneNumber)';
+      case PhoneMode.international:
+        return 'PhoneValidator.isValidInternational($phoneNumber)';
+      case PhoneMode.any:
+        return 'PhoneValidator.isValid($phoneNumber)';
+    }
+  }
+
   /// Sample numbers shown for the selected mode.
   List<String> get phonesTest {
     switch (phoneMode) {
@@ -74,146 +107,25 @@ class _PhoneValidatorPageState extends State<PhoneValidatorPage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('EC Phone Validator', style: TextStyle(color: Colors.white),),
-          backgroundColor: Colors.purple,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LangChoiceOptions(
-                  action: () => setState(() {}),
-                ),             
-                const Text(
-                  'Form',
-                  style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                  children: [
-                    const SizedBox(height: 6,),
-                    DropdownButtonFormField<PhoneMode>(
-                      decoration: InputDecoration(
-                        labelText: 'Phone format',
-                        hintText: 'Phone format',
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        )
-                      ),
-                      initialValue: phoneMode,
-                      items: PhoneMode.values.map( (item) => DropdownMenuItem(
-                        value: item,
-                        child: Text(item.name),
-                      )).toList(),
-                      onChanged: (value) {
-                        if ( value != null ) {
-                          setState(() {
-                            phoneMode = value;
-                          });
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 6,),
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        labelText: 'Phone',
-                        hintText: '0991234567',
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        errorMaxLines: 3,
-                      ),
-                      validator: (value) {
-                        final result = validate(value ?? '');
-                        if (result.isValid) {
-                          normalizedPhone = result.normalizedNumber ?? '';
-                        }
-                        return result.isValid ? null : result.errorMessage;
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    _formKey.currentState?.validate() == true
-                        ? Column(
-                          children: [
-                            const Text(
-                              'Valid phone',
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 20,
-                              )
-                            ),
-                            Text(
-                              'Normalized phone: $normalizedPhone',
-                              style: const TextStyle()
-                            ),
-
-                          ],
-                        )
-                        : const SizedBox(),
-                    ElevatedButton(
-                      onPressed: () {
-                        _formKey.currentState?.validate();
-                        setState(() {});
-                      },
-                      child: const Text('Validate'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        normalizedPhone = '';
-                        _formKey.currentState?.reset();
-                      },
-                      child: const Text('Reset', style: TextStyle(color: Colors.purple,),),
-                    )
-                  ],
-                )),
-                const Text(
-                  'Examples',
-                  style: TextStyle( fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: phonesTest.length,
-                  itemBuilder: (context, index) {
-                    final phoneNumber = phonesTest[index];
-                    final result = validate(phoneNumber);
-                    return Card(
-                      child: ListTile(
-                        title: Text(phoneNumber),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('isValid: ${result.isValid.toString()}',
-                                style: const TextStyle()),
-                            Text('Normalized: ${result.normalizedNumber ?? ''}',
-                                style: const TextStyle()),
-                            Text(
-                                'Error code: ${result.typeCodeError?.toString() ?? ''}',
-                                style: const TextStyle()),
-                            Text('Error message: ${result.errorMessage ?? ''}',
-                                style: const TextStyle()),
-                            Text(
-                                'Message in EN: ${result.messageIn(EcMessagesEn()) ?? ''}',
-                                style: const TextStyle()),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ));
+    return ValidatorDemoPage(
+      title: 'Phone number',
+      description:
+          'Validates Ecuadorian mobile and landline numbers and '
+          'returns them normalized.',
+      icon: Icons.phone_outlined,
+      inputLabel: 'Phone number',
+      inputHint: '0991234567',
+      keyboardType: TextInputType.phone,
+      modeSelector: ModeSelector<PhoneMode>(
+        label: 'Phone format',
+        modes: modes,
+        selected: phoneMode,
+        onChanged: (value) => setState(() => phoneMode = value),
+      ),
+      validate: (value) => DemoResult.phone(validate(value)),
+      codeFor: codeFor,
+      examples: phonesTest,
+      showNormalized: true,
+    );
   }
 }

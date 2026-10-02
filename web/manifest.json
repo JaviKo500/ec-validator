@@ -1,12 +1,12 @@
 {
-    "name": "ec_validator",
-    "short_name": "ec_validator",
+    "name": "ec_validations demo",
+    "short_name": "EC Validator",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
-    "orientation": "portrait-primary",
+    "background_color": "#FBF8FF",
+    "theme_color": "#2747A8",
+    "description": "Interactive demo of ec_validations: validate Ecuadorian ID cards, RUC and phone numbers.",
+    "orientation": "any",
     "prefer_related_applications": false,
     "icons": [
         {
